@@ -1,0 +1,32 @@
+---
+
+- hosts: all
+
+  environment:
+    http_proxy: "{{ lookup('env', 'http_proxy') }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') }}"
+
+  vars:
+    
+    msg: |
+      Environment Variables ("environment"):
+      --------------------------------------
+      {{ environment | to_nice_json }}
+
+    received_file: get_pip.py
+
+  tasks:
+
+    - name: "Remove file {{ received_file }}"
+      file:
+        path: "{{ received_file }}"
+        state: absent
+
+    - debug:
+        msg: "{{ msg.split('\n') }}"
+
+    - name: "Download file {{ received_file }}"
+      get_url:
+        url: "http://bootstrap.pypa.io/get-pip.py"
+        dest: "{{ received_file }}"
+        
