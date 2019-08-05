@@ -1,0 +1,6 @@
+---
+
+- name: geerlingguy.docker
+  cms: git
+  src: git+https://github.com/geerlingguy/ansible-role-docker.git
+  version: origin/master

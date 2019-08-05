@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-ansible-playbook --ask-become-pass -i hosts.yml -vv test-no-proxy.yml
+# Install requirements
+ansible-galaxy install --force --ignore-certs -r requirements.yml -p roles/
 
-ansible-playbook --ask-become-pass -i hosts.yml -vv test-proxy.yml
+#ansible-playbook --ask-become-pass -i hosts.yml -vvv test-no-proxy.yml
+
+ansible-playbook --ask-become-pass -i hosts.yml -vvv test-proxy.yml

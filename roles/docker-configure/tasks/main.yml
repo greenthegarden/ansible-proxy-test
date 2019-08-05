@@ -1,0 +1,19 @@
+---
+
+- name: "Check if docker service is running"
+  command: "systemctl status docker"
+  ignore_errors: yes
+  register: docker_service_running
+
+- name: Configure docker
+  import_tasks: configure.yml       
+  tags:
+    - configuration
+    - docker
+
+- name: Ensure correct firewall settings
+  import_tasks: firewall-configuration.yml
+  tags:
+    - configuration
+    - docker
+  when: manage_firewall

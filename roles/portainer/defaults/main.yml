@@ -1,0 +1,17 @@
+---
+
+portainer:
+  image:
+    name: portainer
+    tag: 1.22.0
+  container:
+    name: portainer
+    ports:
+      http: 9000
+    restart:
+      policy: always
+  conf_dir: "{{ ansible_user_dir }}/portainer"
+  service:
+    name: portainer
+  volumes:
+    data: portainer_data

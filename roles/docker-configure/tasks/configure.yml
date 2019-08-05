@@ -1,0 +1,49 @@
+---
+
+- name: Create docker daemon socket directory
+  become: yes
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    
+ # Allow remote access to Docker
+- name: Configure docker daemon service
+  become: yes
+  template:
+    src: docker.conf.j2
+    dest: /etc/systemd/system/docker.service.d/docker.conf
+  notify: restart_docker
+  
+# Enable proxy settings for Docker daemon
+- name: Configure docker daemon socket
+  become: yes
+  template:
+    src: http-proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+  notify: restart_docker
+  when: configure_for_proxy
+
+# Configure the docker daemon
+# See: https://docs.docker.com/config/daemon
+- name: Configure the docker daemon
+  become: yes
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    backup: yes
+  notify: restart_docker
+
+- set_fact:
+    docker_client_conf_dir: "{{ ansible_user_dir }}/.docker"
+
+- name: Create directory for docker user configuration  
+  file:
+    path: "{{ docker_client_conf_dir }}"
+    state: directory
+
+- name: Generate docker client settings
+  template:
+    src: config.json.j2
+    dest: "{{ docker_client_conf_dir }}/config.json"
+    backup: yes
+    when: configure_for_proxy

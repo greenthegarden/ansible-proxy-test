@@ -1,2 +1,5 @@
 get_pip.py
 
+# do not add external ansible roles
+geerlingguy.*
+docker-install

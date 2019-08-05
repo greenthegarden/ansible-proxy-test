@@ -1,0 +1,8 @@
+---
+
+- name: restart_docker
+  become: yes
+  service:
+    daemon_reload: yes
+    name: docker
+    state: "{{ docker_restart_handler_state }}"

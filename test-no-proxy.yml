@@ -3,7 +3,11 @@
 - hosts: all
 
   vars:
-    
+    docker_install_compose: no
+    docker_users: [
+      "{{ ansible_user_id }}"
+    ]
+
   pre_tasks:
 
     - name: "Run pre-tasks"
@@ -19,3 +23,19 @@
     - name: "Test proxy by installing package"
       import_role:
         name: install_pkg
+
+    - name: "Install Docker"
+      become: true
+      import_role:
+        name: geerlingguy.docker
+
+    - name: "Configure Docker"
+      become: true
+      import_role:
+        name: docker-configure
+      
+    - name: "Run docker image"
+      import_role:
+        name: portainer
+      
+      

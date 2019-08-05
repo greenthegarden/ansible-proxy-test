@@ -6,8 +6,21 @@
 
     http_proxy: "{{ lookup('env', 'http_proxy') }}"
     https_proxy: "{{ lookup('env', 'https_proxy') }}"
+#    http_proxy: "http://{{ ansible_default_ipv4.address }}:3128"
+#    https_proxy: "http://{{ ansible_default_ipv4.address }}:3128"
 
   vars:
+    configure_for_proxy: yes
+    manage_firewall: yes
+    
+    docker_install_compose: no
+    docker_users: [
+      "{{ ansible_user_id }}"
+    ]
+    # local http_proxy
+    http_proxy: "{{ lookup('env', 'http_proxy') }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') }}"
+    # to get remote, use {{ ansible_env.http_proxy }}
     
   pre_tasks:
 
@@ -24,3 +37,19 @@
     - name: "Test proxy by installing package"
       import_role:
         name: install_pkg
+
+    - name: "Install Docker"
+      become: true
+      import_role:
+        name: geerlingguy.docker
+
+    - name: "Configure Docker"
+      become: true
+      import_role:
+        name: docker-configure
+        tasks_from: configure.yml
+      
+    - name: "Run docker image"
+      import_role:
+        name: portainer
+        
