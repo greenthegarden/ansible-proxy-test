@@ -9,16 +9,12 @@
 
   vars:
     
-    msg: |
-      Environment Variables ("environment"):
-      --------------------------------------
-      {{ environment | to_nice_json }}
-
   pre_tasks:
 
-    - debug:
-        msg: "{{ msg.split('\n') }}"
-        
+    - name: "Run pre-tasks"
+      import_role:
+        name: pre_tasks
+
   tasks:
 
     - name: "Test proxy by getting file"
@@ -28,4 +24,3 @@
     - name: "Test proxy by installing package"
       import_role:
         name: install_pkg
-

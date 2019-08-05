@@ -1,0 +1,8 @@
+---
+
+- name: Return ansible version
+  debug:
+    msg: "Using Ansible version {{ ansible_version.full }}"
+
+- debug:
+    msg: "{{ msg.split('\n') }}"
