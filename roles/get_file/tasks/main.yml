@@ -1,0 +1,11 @@
+---
+
+- name: "Remove local file {{ file_local }}"
+  file:
+    path: "{{ file_local }}"
+    state: absent
+
+- name: "Download remote file {{ file_remote }} to {{ file_local }}"
+  get_url:
+    url: "{{ file_remote }}"
+    dest: "{{ file_local }}"

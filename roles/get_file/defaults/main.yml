@@ -1,0 +1,4 @@
+---
+
+file_remote: http://bootstrap.pypa.io/get-pip.py 
+file_local: ./get_pip.py
