@@ -1,9 +1,10 @@
 ---
 
-configure_for_proxy: no
+host_interface: enp0s3
 
 docker_restart_handler_state: restarted
 
 docker_python_modules: [
   docker,
 ]
+
