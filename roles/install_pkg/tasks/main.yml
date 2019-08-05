@@ -1,0 +1,13 @@
+---
+
+- name: "Remove package {{ package }}"
+  become: yes
+  package:
+    name: "{{ package }}"
+    state: absent
+
+- name: "Install package {{ package }}"
+  become: yes
+  package:
+    name: "{{ package }}"
+    state: latest

@@ -19,3 +19,7 @@
     - name: "Test proxy by getting file"
       import_role:
         name: get_file
+
+    - name: "Test proxy by install package"
+      import_role:
+        name: install_pkg
