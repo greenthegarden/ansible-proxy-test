@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+
+  vars:
+    
+    msg: |
+      Environment Variables ("environment"):
+      --------------------------------------
+      {{ environment | to_nice_json }}
+
+  pre_tasks:
+
+    - debug:
+        msg: "{{ msg.split('\n') }}"
+        
+  tasks:
+
+    - name: "Test proxy by getting file"
+      import_role:
+        name: get_file
