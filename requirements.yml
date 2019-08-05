@@ -4,3 +4,8 @@
   cms: git
   src: git+https://github.com/geerlingguy/ansible-role-docker.git
   version: origin/master
+
+- name: geerlingguy.pip
+  cms: git
+  src: git+https://github.com/geerlingguy/ansible-role-pip.git
+  version: origin/master
