@@ -6,14 +6,12 @@
   register: docker_service_running
 
 - name: Configure docker
-  import_tasks: configure.yml       
-  tags:
-    - configuration
-    - docker
+  import_tasks: configure.yml
+  when: docker_service_running.rc == 0    
 
 - name: Ensure correct firewall settings
   import_tasks: firewall-configuration.yml
   tags:
     - configuration
     - docker
-  when: manage_firewall
+  when: docker_service_running.rc == 0 

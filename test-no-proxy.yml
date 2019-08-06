@@ -26,7 +26,7 @@
 
     - set_fact:
         pip_install_packages: [
-          { 'name': 'molecule', 'state': 'latest' }
+          { 'name': 'astral', 'state': 'latest' }
         ]
 
     - name: Test proxy by installing pip and python modules"
