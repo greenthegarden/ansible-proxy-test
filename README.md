@@ -8,9 +8,12 @@ https://medium.com/@saniaky/configure-docker-to-use-a-host-proxy-e88bd988c0aa
 
 Need to set the following environment variables on the host, as external IP addresses:
 
-http_proxy
-https_proxy
-no_proxy
+* http_proxy
+* https_proxy
+* no_proxy
+* HTTP_PROXY
+* HTTPS_PROXY
+* NO_PROXY
 
 To test with docker
 
