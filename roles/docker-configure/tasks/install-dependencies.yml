@@ -1,0 +1,13 @@
+---
+
+- name: "Set python modules for pip to install"
+  set_fact:
+    pip_install_packages: [
+      { 'name': 'docker', 'state': 'latest' },
+#      { 'name': 'python-firewalld', 'state': 'latest' }
+    ]
+
+- name: "Install pip and dependent modules"
+  become: yes
+  import_role:
+    name: geerlingguy.pip

@@ -1,0 +1,39 @@
+---
+
+- name: Configure inbound Docker traffic
+  become: true
+  iptables:
+    action: append
+    chain: FORWARD
+    in_interface: docker0
+    out_interface: "{{ host_interface }}"
+    jump: ACCEPT
+
+- name: Configure outbound Docker traffic
+  become: true
+  iptables:
+    action: append
+    chain: FORWARD
+    in_interface: "{{ host_interface }}"
+    out_interface: docker0
+    jump: ACCEPT
+    
+- name: Enabled inbound UDP traffic on port 53
+  become: true
+  iptables:
+    action: append
+    chain: INPUT
+    protocol: udp
+    match: udp
+    destination_port: '53'
+    jump: ACCEPT
+    
+- name: Enabled outbound UDP traffic on port 53
+  become: true
+  iptables:
+    action: append
+    chain: OUTPUT
+    protocol: udp
+    match: udp
+    source_port: '53'
+    jump: ACCEPT

@@ -1,5 +1,8 @@
 ---
 
+- name: "Install dependencies"
+  import_tasks: install-dependencies.yml
+
 - name: "Check if docker service is running"
   command: "systemctl status docker"
   ignore_errors: yes
@@ -11,4 +14,4 @@
 
 - name: Ensure correct firewall settings
   import_tasks: firewall-configuration.yml
-  when: docker_service_running.rc == 0
+  when: docker_service_running.rc == 0 and manage_firewall

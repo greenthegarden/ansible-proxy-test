@@ -19,8 +19,6 @@
     configure_for_proxy: yes
     manage_firewall: yes
     
-    #external_proxy_addr: http://
-
     # local http_proxy
     http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"
     https_proxy: "{{ lookup('env', 'https_proxy') | default(omit) }}"
@@ -38,12 +36,12 @@
     - name: "Test proxy by getting a file"
       import_role:
         name: get_file
-      when: 0
+      when: 1
 
     - name: "Test proxy by installing a package"
       import_role:
         name: install_pkg
-      when: 0
+      when: 1
 
     - name: "Set python modules for pip to install"
       set_fact:
@@ -61,15 +59,15 @@
       become: yes
       import_role:
         name: geerlingguy.docker
-      when: 0
+      when: 1
 
     - name: "Configure Docker"
       become: yes
       import_role:
         name: docker-configure
-      when: 0
+      when: 1
 
     - name: "Run docker image"
       import_role:
         name: portainer
-      when: 0
+      when: 1
