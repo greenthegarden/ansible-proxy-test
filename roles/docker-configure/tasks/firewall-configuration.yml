@@ -7,3 +7,15 @@
     interface: docker0
     permanent: yes
     state: enabled
+
+# open port 53 on firewall to enable docker pull
+- name: Set ports to allow inbound/outbound traffic
+  set_fact:
+    ports: "{{ docker_firewall_ports }}"
+  notify: open_firewall_ports
+  changed_when: true
+
+- name: Configure firewall
+  import_role:
+    name: firewall-configuration
+    tasks_from: open-firewall-ports.yml

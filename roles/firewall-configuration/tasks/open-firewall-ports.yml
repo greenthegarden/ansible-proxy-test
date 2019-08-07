@@ -1,0 +1,16 @@
+---
+
+- name: Set ports to allow inbound/outbound traffic
+  set_fact:
+    ports: "{{ proxy_firewall_ports }}"
+  notify: open_firewall_ports
+  changed_when: true
+  when: manage_firewall
+
+- name: Restart firewall to register firewall changes
+  become: true
+  service: 
+    daemon_reload: yes
+    name: firewalld
+    state: restarted
+    

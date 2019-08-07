@@ -8,10 +8,17 @@
   ignore_errors: yes
   register: docker_service_running
 
-- name: Configure docker
-  import_tasks: configure.yml       
-  when: docker_service_running.rc == 0
+- name: Configure docker and firewall
+  block:
+  - name: Configure docker
+    import_tasks: configure.yml
 
-- name: Ensure correct firewall settings
-  import_tasks: firewall-configuration.yml
-  when: docker_service_running.rc == 0 and manage_firewall
+  - name: "Check if firewalld service is running"
+    command: "systemctl status firewalld"
+    ignore_errors: yes
+    register: firewalld_service_running
+
+  - name: Ensure correct firewall settings
+    import_tasks: firewall-configuration.yml
+    when: firewalld_service_running.rc == 0 and manage_firewall
+  when: docker_service_running.rc == 0

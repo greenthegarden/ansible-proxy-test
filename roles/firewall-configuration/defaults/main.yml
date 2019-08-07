@@ -1,0 +1,5 @@
+---
+
+proxy_firewall_ports:
+  - { port: 3128, protocol: tcp }
+  - { port: 3128, protocol: udp }

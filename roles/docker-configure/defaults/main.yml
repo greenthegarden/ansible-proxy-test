@@ -7,3 +7,7 @@ docker_restart_handler_state: restarted
 docker_python_modules: [
   docker,
 ]
+
+docker_firewall_ports:
+  - { port: 53, protocol: tcp }
+  - { port: 53, protocol: udp }

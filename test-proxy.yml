@@ -33,15 +33,20 @@
 
   tasks:
 
+    - name: "Open proxy firewall"
+      import_role:
+        name: firewall-configuration
+      when: 1
+
     - name: "Test proxy by getting a file"
       import_role:
         name: get_file
-      when: 1
+      when: 0
 
     - name: "Test proxy by installing a package"
       import_role:
         name: install_pkg
-      when: 1
+      when: 0
 
     - name: "Set python modules for pip to install"
       set_fact:
@@ -53,21 +58,21 @@
       become: yes
       import_role:
         name: geerlingguy.pip
-      when: 1
+      when: 0
 
     - name: "Install Docker"
       become: yes
       import_role:
         name: geerlingguy.docker
-      when: 1
+      when: 0
 
     - name: "Configure Docker"
       become: yes
       import_role:
         name: docker-configure
-      when: 1
+      when: 0
 
     - name: "Run docker image"
       import_role:
         name: portainer
-      when: 1
+      when: 0

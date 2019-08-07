@@ -1,0 +1,9 @@
+---
+
+- name: Restart firewall to register firewall changes
+  become: true
+  service: 
+    daemon_reload: yes
+    name: firewalld
+    state: restarted
+    

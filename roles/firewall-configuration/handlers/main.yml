@@ -1,0 +1,11 @@
+---
+
+- name: open_firewall_ports
+  become: yes
+  firewalld:
+    zone: public
+    port: "{{ item.port }}/{{ item.protocol }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items: "{{ ports }}"
