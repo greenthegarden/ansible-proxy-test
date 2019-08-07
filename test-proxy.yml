@@ -1,4 +1,11 @@
 ---
+- hosts: host_proxy
+
+  tasks:
+
+    - name: "Open proxy firewall"
+      import_role:
+        name: firewall-configuration
 
 - hosts: all
 
@@ -32,12 +39,7 @@
         name: pre_tasks
 
   tasks:
-
-    - name: "Open proxy firewall"
-      import_role:
-        name: firewall-configuration
-      when: 1
-
+  
     - name: "Test proxy by getting a file"
       import_role:
         name: get_file
