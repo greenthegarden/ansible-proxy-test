@@ -1,0 +1,10 @@
+set host_ip=10.57.88.35
+set no_proxy_list=localhost,127.0.0.1,172.17.0.1
+setenv http_proxy http://${host_ip}:3128
+setenv https_proxy http://${host_ip}:3128
+setenv ftp_proxy http://${host_ip}:3128
+setenv no_proxy ${no_proxy_list}
+setenv HTTP_PROXY http://${host_ip}:3128
+setenv HTTPS_PROXY http://${host_ip}:3128
+setenv FTP_PROXY http://${host_ip}:3128
+setenv NO_PROXY ${no_proxy_list}

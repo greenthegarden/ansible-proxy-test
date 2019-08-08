@@ -1,13 +1,13 @@
 ---
 
-- name: Create docker daemon service directory
+- name: Create docker daemon service configuration directory
   become: yes
   file:
     path: /etc/systemd/system/docker.service.d
     state: directory
     
  # Re-configure docker daemon service
-- name: Configure docker daemon service
+- name: Generate docker daemon service configuration file
   become: yes
   template:
     src: docker.conf.j2
@@ -15,7 +15,7 @@
   notify: restart_docker
   
 # Configure docker daemon service to use proxy
-- name: Configure docker daemon socket
+- name: Generate docker daemon service proxy configuration file
   become: yes
   template:
     src: http-proxy.conf.j2
@@ -25,7 +25,7 @@
 
 # Configure the docker daemon
 # See: https://docs.docker.com/config/daemon
-- name: Configure the docker daemon
+- name: Generate docker daemon configure file
   become: yes
   template:
     src: daemon.json.j2
@@ -33,13 +33,9 @@
     backup: yes
   notify: restart_docker
 
-- name: "Set docker client configuration directory to {{ ansible_user_dir }}/.docker"
-  set_fact:
-    docker_client_conf_dir: "{{ ansible_user_dir }}/.docker"
-
-- name: Create directory for docker client configuration  
+- name: Create docker client configuration directory 
   file:
-    path: "{{ docker_client_conf_dir }}"
+    path: "{{ ansible_user_dir }}/.docker"
     state: directory
 
 # Configure Docker Client to pass proxy information to containers
