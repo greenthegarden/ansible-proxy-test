@@ -17,5 +17,5 @@
 
 - name: Configure firewall
   import_role:
-    name: firewall-configuration
+    name: configure-firewall
     tasks_from: open-firewall-ports.yml

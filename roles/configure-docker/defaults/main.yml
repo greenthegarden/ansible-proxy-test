@@ -2,6 +2,8 @@
 
 host_interface: enp0s3
 
+docker_client_conf_dir: "{{ ansible_user_dir }}/.docker"
+
 docker_restart_handler_state: restarted
 
 docker_python_modules: [

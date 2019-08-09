@@ -2,7 +2,7 @@
 
 portainer:
   image:
-    name: portainer
+    name: portainer/portainer
     tag: 1.22.0
   container:
     name: portainer

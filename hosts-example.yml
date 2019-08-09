@@ -1,0 +1,24 @@
+---
+
+all:
+
+  hosts:
+
+    ansible-node:
+      ansible_connection: local
+      ansible_host: localhost
+    proxy-node:
+      ansible_ssh_host:
+    remote-node:
+      ansible_ssh_host:
+
+  children:
+
+    test_instances:
+      hosts:
+        proxy-node:
+        remote-node:
+        
+    proxy_instances:
+      hosts:
+        proxy-node:

@@ -12,7 +12,7 @@
   block:
 
   - name: Configure docker
-    import_tasks: configure.yml
+    import_tasks: configure-docker.yml
 
   - name: "Check if firewalld service is running"
     command: "systemctl status firewalld"
@@ -20,7 +20,7 @@
     register: firewalld_service_running
 
   - name: Ensure correct firewall settings
-    import_tasks: firewall-configuration.yml
+    import_tasks: configure-firewall.yml
     when:
       - inventory_hostname in groups['proxy_instances']
       - firewalld_service_running.rc == 0

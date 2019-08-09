@@ -3,6 +3,9 @@ index.html*
 *.log
 .vagrant/
 
+# prevent a hosts.yml file being added to repository
+hosts.yml
+
 # do not add external ansible roles
 geerlingguy.*
 docker-install

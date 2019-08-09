@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: test_instances
 
   tasks:
 
@@ -9,25 +9,24 @@
 
       - name: Configure environment
         import_role:
-          name: environment-configuration
-
+          name: configure-environment
 
       - name: Reset ssh connection
         meta: reset_connection
 
-      when: 1
+      when: 0
 
 
-- hosts: host_proxy
+- hosts: proxy_instances
 
   tasks:
 
     - name: "Open proxy firewall"
       import_role:
-        name: firewall-configuration
+        name: configure-firewall
 
 
-- hosts: all
+- hosts: test_instances
 
   environment:
     http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"
@@ -61,17 +60,17 @@
   
     - name: "Run debug tasks"
       import_role:
-        name: debug_tasks
+        name: run-debug-tasks
 
     - name: "Test proxy by getting a file"
       import_role:
-        name: get_file
-      when: 0
+        name: get-file
+      when: 1
 
     - name: "Test proxy by installing a package"
       import_role:
-        name: install_pkg
-      when: 0
+        name: install-pkg
+      when: 1
 
     - name: "Set python modules for pip to install"
       set_fact:
@@ -83,21 +82,22 @@
       become: yes
       import_role:
         name: geerlingguy.pip
-      when: 0
+      when: 1
 
     - name: "Install Docker"
       become: yes
       import_role:
         name: geerlingguy.docker
-      when: 0
+      when: 1
 
     - name: "Configure Docker"
       become: yes
       import_role:
-        name: docker-configure
-      when: 0
+        name: configure-docker
+      when: 1
 
     - name: "Run docker image"
       import_role:
-        name: portainer
-      when: 0
+        name: run-portainer
+      when: 1
+      

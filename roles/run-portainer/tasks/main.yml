@@ -11,10 +11,7 @@
 
 - name: "Create command"
   set_fact:
-    portainer_command: "--no-auth" #--external-endpoints /srv/portainer/endpoints.json"
-
-- debug:
-    var: portainer_command
+    portainer_command: "--no-auth"
 
 - name: "Launch {{ portainer.image.name }}:{{ portainer.image.tag }} as container {{ portainer.container.name }}"
   docker_container:
@@ -22,7 +19,7 @@
     image: "{{ portainer.image.name }}:{{ portainer.image.tag }}"
     command: "{{ portainer_command }}"
     published_ports:
-      - "9000:9000"
+      - 9000:9000
     pull: yes
     recreate: yes
     restart: yes

@@ -21,7 +21,7 @@
     src: http-proxy.conf.j2
     dest: /etc/systemd/system/docker.service.d/http-proxy.conf
   notify: restart_docker
-  when: (http_proxy is defined) or (https_proxy is defined)
+  when: (ansible_env.http_proxy is defined) or (ansible_env.https_proxy is defined)
 
 # Configure the docker daemon
 # See: https://docs.docker.com/config/daemon
@@ -33,9 +33,9 @@
     backup: yes
   notify: restart_docker
 
-- name: Create docker client configuration directory 
+- name: "Create docker client configuration directory {{ docker_client_conf_dir }}"
   file:
-    path: "{{ ansible_user_dir }}/.docker"
+    path: "{{ docker_client_conf_dir }}"
     state: directory
 
 # Configure Docker Client to pass proxy information to containers
@@ -44,4 +44,4 @@
     src: config.json.j2
     dest: "{{ docker_client_conf_dir }}/config.json"
     backup: yes
-  when: (http_proxy is defined) or (https_proxy is defined)
+  when: (ansible_env.http_proxy is defined) or (ansible_env.https_proxy is defined)

@@ -21,6 +21,10 @@ all:
 
   children:
 
+    test_instances:
+      hosts:
+        remote-node:
+
     proxy_instances:
       hosts:
-        proxy-node:
+

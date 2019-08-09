@@ -171,6 +171,7 @@ Vagrant.configure("2") do |config|
         ansible.limit = "all"
         ansible.verbose = "v"
 
+        ansible.config_file = "ansible.cfg"
         ansible.inventory_path = "hosts-vagrant.yml"
         ansible.playbook = "test-proxy.yml"
 

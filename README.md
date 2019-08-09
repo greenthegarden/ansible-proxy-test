@@ -6,6 +6,9 @@
 
 ## Instructions
 
+The play is designed to be able to run on tolopologies where there is or is not a proxy running. 
+Copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node`.
+
 Need to set the following environment proxy variables, as external IP addresses, on each host file `$HOME/.profile`, for example:
 
 ```bash
@@ -32,7 +35,9 @@ setenv HTTPS_PROXY http://$proxy_ip:$proxy_port
 setenv NO_PROXY $no_proxy_list
 ```
 
-Set the remote host IP address in the Ansible inventory file [hosts.yml](hosts.yml) and run the play using `./run_play.sh`.
+Copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node`.
+
+Run the play using the script [`./run_play.sh`](run_play.sh).
 
 ## Test
 
