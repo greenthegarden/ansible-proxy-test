@@ -1,12 +1,38 @@
-# Test Ansible play behaviour behind a proxy
+# Test Ansible role behaviour behind a proxy
 
-## Topolgy
+## Introduction
+
+This project was created to understand how to configure hosts which may be behind a proxy and have a firewall set to run Ansible unmodified roles. Not needed to modify the roles allows Ansible Galazy role to be utilised directly, reducing the maintence overhead of maintaining a large number of roles. A second, objective is to utilise a single proxy instance in order to reduce the riks associated with running multiple password protected proxies. The type of topololgy which is therefore utilised is shown in the following figure.
 
 ![Topology](docs/ProxyConfiguration.png)
 
+In order to allow Ansible roles to be utilised behind a proxy Ansible requires the following environment variables to be defined:
+
+| variable    | used by         |
+| ----------- | --------------- |
+| http_proxy  | pkg_mgr, docker |
+| https_proxy | pkg_mgr, docker |
+| no_proxy    | pkg_mgr, docker |
+| HTTP_PROXY  | pip             |
+| HTTPS_PROXY | pip             |
+| NO_PROXY    | pip             |
+
+Ansible uses the following different apporaches to get environment varialbes from the controller and remote nodes.
+
+The Ansible [env lookup](https://docs.ansible.com/ansible/latest/plugins/lookup/env.html) plugin allows the query of environment variables on the controller, for example
+
+```
+http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"
+```
+
+To return the equivalent variable on a remote node, use
+
+```
+http_proxy: "{{ ansible_env.http_proxy | default(omit) }}"
+```
+
 ## Instructions
 
-The play is designed to be able to run on tolopologies where there is or is not a proxy running. 
 Copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node`.
 
 Need to set the following environment proxy variables, as external IP addresses, on each host file `$HOME/.profile`, for example:
