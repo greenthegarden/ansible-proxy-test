@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project was created to understand how to configure hosts which may be behind a proxy and have a firewall set to run Ansible unmodified roles. Not needed to modify the roles allows Ansible Galazy role to be utilised directly, reducing the maintence overhead of maintaining a large number of roles. A second, objective is to utilise a single proxy instance in order to reduce the riks associated with running multiple password protected proxies. The type of topololgy which is therefore utilised is shown in the following figure.
+This project was created to understand how to configure hosts which may be behind a proxy and have a firewall set to run Ansible unmodified roles. Not needing to modify the roles enables [Ansible Galazy](https://galaxy.ansible.com/) roles to be utilised directly, reducing the maintence overhead of maintaining a large number of base roles. A second objective of the project is to test the utilisation of a single proxy instance in order to reduce the risks associated with running multiple password protected proxies. The type of topololgy which is therefore utilised is shown in the following figure.
 
 ![Topology](docs/ProxyConfiguration.png)
 
@@ -30,6 +30,39 @@ To return the equivalent variable on a remote node, use
 ```
 http_proxy: "{{ ansible_env.http_proxy | default(omit) }}"
 ```
+
+## Proxy Configuration
+
+[Cntlm](http://cntlm.sourceforge.net/) is assumed to be utilised as a proxy and therefore needs to be installed on the host designated as the `proxy-node`. The following changes are required to be made to the cntlm configuration file, in addition to the corporate settings required for the proxy to work. To easily manage the proxy it is suggested to use a configuration file in user space rather than the global one in `/etc/cntlm.conf`.
+
+Set the port cntlm will listen to 3128, for all interefaces, by ensuring the only `Listen` statement is 
+
+```
+Listen 3128
+```
+
+Enable the gateway by setting
+
+```
+Gateway yes
+```
+
+Restrict access to the proxy by specifying the addresses of all remote nodes, along with localhost, and any docker networks, for example
+
+```
+Allow  127.0.0.1    # localhost
+Allow  10.57.88.35  # remote node
+Allow  10.57.88.21  # remote node
+Allow  172.17.0.1/16 # Docker containers
+Deny  0/0
+```
+
+The proxy can be run in the foreground in order to observe any requests being passed to it using, for example
+
+```
+cntlm -f -c ~/cntlm.conf
+```
+
 
 ## Instructions
 
