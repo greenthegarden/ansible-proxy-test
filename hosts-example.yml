@@ -4,21 +4,21 @@ all:
 
   hosts:
 
-    ansible-node:
+    node-1:
       ansible_connection: local
       ansible_host: localhost
-    proxy-node:
-      ansible_ssh_host:
-    remote-node:
-      ansible_ssh_host:
+      manage_firewall: no
+    node-2:
+      ansible_connection: ssh
+      ansible_ssh_host: 
+      manage_firewall: no
 
   children:
+      
+    proxy_node:
+      hosts:
+        node-1:
 
-    test_instances:
+    remote_nodes:
       hosts:
-        proxy-node:
-        remote-node:
-        
-    proxy_instances:
-      hosts:
-        proxy-node:
+        node-2:
