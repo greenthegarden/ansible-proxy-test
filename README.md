@@ -51,8 +51,8 @@ Restrict access to the proxy by specifying the addresses of all remote nodes, al
 
 ```
 Allow  127.0.0.1    # localhost
-Allow  10.57.88.35  # remote node
-Allow  10.57.88.21  # remote node
+Allow  172.16.0.100  # proxy node
+Allow  172.16.0.101  # remote node
 Allow  172.17.0.1/16 # Docker containers
 Deny  0/0
 ```
@@ -63,12 +63,11 @@ The proxy can be run in the foreground in order to observe any requests being pa
 cntlm -f -c ~/cntlm.conf
 ```
 
-
 ## Instructions
 
-Copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node`.
+The following environment proxy variables need to be set, as external IP addresses, on the node from which Ansible is run, in the file `$HOME/.profile`, for example:
 
-Need to set the following environment proxy variables, as external IP addresses, on each host file `$HOME/.profile`, for example:
+If running bash shell
 
 ```bash
 proxy_ip=172.16.0.100
@@ -82,6 +81,8 @@ export HTTPS_PROXY=http://$proxy_ip:$proxy_port
 export NO_PROXY=$no_proxy_list
 ```
 
+If running tcsh or csh
+
 ```tcsh
 set proxy_ip=172.16.0.100
 set proxy_port=3128
@@ -94,9 +95,9 @@ setenv HTTPS_PROXY http://$proxy_ip:$proxy_port
 setenv NO_PROXY $no_proxy_list
 ```
 
-Copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node`.
+To run the play on existing infrastructure, copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node` nodes. Run the play from the host in which the proxy environment variables wre set in the file `$HOME/.profile` using the script [`./run_play.sh`](run_play.sh).
 
-Run the play using the script [`./run_play.sh`](run_play.sh).
+In addition, a [Vagrant](https://www.vagrantup.com/) script is included which will utilise [VirtualBox](https://www.virtualbox.org/) to automatically provision nodes in order to test the roles in the case without a proxy or firewall. 
 
 ## Test
 
