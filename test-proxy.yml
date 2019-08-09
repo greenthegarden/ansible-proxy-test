@@ -1,6 +1,6 @@
 ---
 
-- hosts: test_instances
+- hosts: proxy_node
 
   tasks:
 
@@ -17,8 +17,8 @@
       when: 0
 
 
-- hosts: proxy_instances
-
+- hosts: proxy_node
+   
   tasks:
 
     - name: "Open proxy firewall"
@@ -26,7 +26,7 @@
         name: configure-firewall
 
 
-- hosts: test_instances
+- hosts: remote_nodes
 
   environment:
     http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"
@@ -43,10 +43,6 @@
       "{{ ansible_user_id }}"
     ]
 
-    # should be able to be determined automatically and removed
-    configure_for_proxy: yes
-    manage_firewall: yes
-    
     # local http_proxy
     http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"
     https_proxy: "{{ lookup('env', 'https_proxy') | default(omit) }}"

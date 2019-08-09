@@ -13,18 +13,20 @@ all:
       ansible_ssh_private_key_file: /vagrant/.vagrant/machines/proxy-node/virtualbox/private_key
       ansible_ssh_user: vagrant
       external_iface: enp0s8
+      manage_firewall: no
     remote-node:
       ansible_ssh_host: 172.16.1.101
       ansible_ssh_private_key_file: /vagrant/.vagrant/machines/remote-node/virtualbox/private_key
       ansible_ssh_user: vagrant
       external_iface: enp0s8
+      manage_firewall: no
 
   children:
 
-    test_instances:
+    proxy_node:
+      hosts:
+        proxy-node:
+      
+    remote_nodes:
       hosts:
         remote-node:
-
-    proxy_instances:
-      hosts:
-
