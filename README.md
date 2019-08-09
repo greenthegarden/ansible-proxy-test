@@ -31,6 +31,19 @@ To return the equivalent variable on a remote node, use
 http_proxy: "{{ ansible_env.http_proxy | default(omit) }}"
 ```
 
+The following roles are included in the playbook, [`test-proxy.yml`](test-proxy.yml) to test whether the configuration works:
+
+* use wget to download the file defined by variable `file_remote`.
+* install a package defined by variable `install_package`.
+* use the Galazy Ansible role [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip.git) to install pip and a module defined, in the following format, by the variable `pip_install_packages`
+
+```
+[ { 'name': 'docker', 'state': 'latest' } ]
+```
+
+* use the Galazy Ansible role [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker.git) to install Docker.
+* pull and run the docker image `portainer/portainer:1.22.0` from [Docker Hub](https://hub.docker.com/).
+
 ## Proxy Configuration
 
 [Cntlm](http://cntlm.sourceforge.net/) is assumed to be utilised as a proxy and therefore needs to be installed on the host designated as the `proxy-node`. The following changes are required to be made to the cntlm configuration file, in addition to the corporate settings required for the proxy to work. To easily manage the proxy it is suggested to use a configuration file in user space rather than the global one in `/etc/cntlm.conf`.
@@ -63,7 +76,7 @@ The proxy can be run in the foreground in order to observe any requests being pa
 cntlm -f -c ~/cntlm.conf
 ```
 
-## Instructions
+## Running
 
 The following environment proxy variables need to be set, as external IP addresses, on the node from which Ansible is run, in the file `$HOME/.profile`, for example:
 
@@ -97,9 +110,9 @@ setenv NO_PROXY $no_proxy_list
 
 To run the play on existing infrastructure, copy the example Ansible inventory file [`hosts-example.yml`](hosts-example.yml) to `hosts.yml` and set the relevant IP addresses for the `proxy-node` and `remote-node` nodes. Run the play from the host in which the proxy environment variables wre set in the file `$HOME/.profile` using the script [`./run_play.sh`](run_play.sh).
 
-In addition, a [Vagrant](https://www.vagrantup.com/) script is included which will utilise [VirtualBox](https://www.virtualbox.org/) to automatically provision nodes in order to test the roles in the case without a proxy or firewall. 
+In addition, a [Vagrant](https://www.vagrantup.com/) script is included which will utilise [VirtualBox](https://www.virtualbox.org/) to automatically provision nodes with the topology shown in the figure above in order to test the roles in the case without a proxy or firewall. Run the Vagrant script using `vagrant up`.
 
-## Test
+## Docker Container Test
 
 To test within a Docker container, use an Alpine container on the remote host, for example
 
