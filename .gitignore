@@ -1,5 +1,7 @@
 get_pip.py
 index.html*
+*.log
+.vagrant/
 
 # do not add external ansible roles
 geerlingguy.*

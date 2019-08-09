@@ -1,5 +1,5 @@
 ---
-- hosts: host_proxy
+- hosts: proxy-node
 
   tasks:
 
