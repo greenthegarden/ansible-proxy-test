@@ -4,25 +4,25 @@ configs:
   use: 'test'
 
   test:
-    ip_netmask: 255.255.255.0
+    cluster_netmask: 255.255.255.0
 
 ansible_node:
   name: "ansible-node"
   memory: 1024
   cpus: 1
-  external_network: "private_network"
-  external_ip: 172.16.1.10
+  cluster_network: "private_network"
+  cluster_ip: 172.16.1.3
 
 proxy_node:
   name: "proxy-node"
   memory: 1024
   cpus: 1
-  external_network: "private_network"
-  external_ip: 172.16.1.100
+  cluster_network: "private_network"
+  cluster_ip: 172.16.1.2
 
-remote_node:
-  name: "remote-node"
+service_node:
+  name: "service-node"
   memory: 1024
   cpus: 1
-  external_network: "private_network"
-  external_ip: 172.16.1.101
+  cluster_network: "private_network"
+  cluster_ip: 172.16.1.101

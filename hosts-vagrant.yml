@@ -4,21 +4,21 @@ all:
 
   hosts:
 
+    proxy-node:
+      ansible_ssh_host: 172.16.1.2
+      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/proxy-node/virtualbox/private_key
+      ansible_ssh_user: vagrant
+      cluster_iface: enp0s8
+      manage_firewall: no 
     ansible-node:
       ansible_connection: local
       ansible_host: localhost
-      external_iface: enp0s8
-    proxy-node:
-      ansible_ssh_host: 172.16.1.100
-      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/proxy-node/virtualbox/private_key
+      cluster_iface: enp0s8
+    service-node:
+      ansible_ssh_host: 172.16.1.10
+      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/service-node/virtualbox/private_key
       ansible_ssh_user: vagrant
-      external_iface: enp0s8
-      manage_firewall: no
-    remote-node:
-      ansible_ssh_host: 172.16.1.101
-      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/remote-node/virtualbox/private_key
-      ansible_ssh_user: vagrant
-      external_iface: enp0s8
+      cluster_iface: enp0s8
       manage_firewall: no
 
   children:
@@ -27,6 +27,6 @@ all:
       hosts:
         proxy-node:
       
-    remote_nodes:
+    service_nodes:
       hosts:
-        remote-node:
+        service-node:

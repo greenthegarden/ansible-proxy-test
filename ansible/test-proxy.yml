@@ -1,32 +1,42 @@
 ---
 
+# - hosts: proxy_node
+
+#   tasks:
+
+#     - name: Set environmental settings when proxy host list exists
+#       block:
+
+#       - name: Configure environment
+#         import_role:
+#           name: configure-environment
+
+#       - name: Reset ssh connection
+#         meta: reset_connection
+
+#       when: 0
+
+
 - hosts: proxy_node
+  
+  pre_tasks:
 
-  tasks:
+    - name: Check whether firewalld is running
+      set_fact:
+        manage_firewall: yes
+      when:
+        - 'firewalld.service' in ansible_facts.services
+        - ansible_facts.services['firewalld.service']['state'] == 'running'
 
-    - name: Set environmental settings when proxy host list exists
-      block:
-
-      - name: Configure environment
-        import_role:
-          name: configure-environment
-
-      - name: Reset ssh connection
-        meta: reset_connection
-
-      when: 0
-
-
-- hosts: proxy_node
-   
   tasks:
 
     - name: "Open proxy firewall"
       import_role:
         name: configure-firewall
+      when: manage_firewall is defined and manage_firewall
 
 
-- hosts: remote_nodes
+- hosts: service_nodes
 
   environment:
     http_proxy: "{{ lookup('env', 'http_proxy') | default(omit) }}"

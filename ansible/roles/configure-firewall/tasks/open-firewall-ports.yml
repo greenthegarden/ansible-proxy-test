@@ -5,7 +5,6 @@
     ports: "{{ proxy_firewall_ports }}"
   notify: open_firewall_ports
   changed_when: true
-  when: manage_firewall
 
 - name: Restart firewall to register firewall changes
   become: true
