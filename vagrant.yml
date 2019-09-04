@@ -6,8 +6,8 @@ configs:
   test:
     cluster_netmask: 255.255.255.0
 
-ansible_node:
-  name: "ansible-node"
+controller_node:
+  name: "controller-node"
   memory: 1024
   cpus: 1
   cluster_network: "private_network"

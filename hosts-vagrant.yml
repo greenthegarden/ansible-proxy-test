@@ -10,7 +10,7 @@ all:
       ansible_ssh_user: vagrant
       cluster_iface: enp0s8
       manage_firewall: no 
-    ansible-node:
+    controller-node:
       ansible_connection: local
       ansible_host: localhost
       cluster_iface: enp0s8
@@ -29,4 +29,4 @@ all:
       
     service_nodes:
       hosts:
-        service-node:
+        compute-node:

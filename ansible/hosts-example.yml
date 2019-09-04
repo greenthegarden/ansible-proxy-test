@@ -4,7 +4,7 @@ all:
 
   hosts:
 
-    ansible-node:
+    controller-node:
       ansible_connection: local
       ansible_host: localhost
     proxy-node:
@@ -16,9 +16,9 @@ all:
 
   children:
       
-    ansible_node:
+    controller_node:
       hosts:
-        ansible-node:
+        controller-node:
 
     proxy_node:
       hosts:

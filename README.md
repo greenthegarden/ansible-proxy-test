@@ -39,7 +39,7 @@ The following roles are included in the playbook, [`test-proxy.yml`](test-proxy.
 * [install_pkg](ansible/roles/install_pkg): installs a package defined by variable `install_package`.
 * geerlingguy.pip: uses the Galazy  Ansible role [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip.git) to install pip and a module defined, in the format `[ { 'name': 'docker', 'state': 'latest' } ]`, by the variable `pip_install_packages`:
 * geerlingguy.docker: use the Galazy Ansible role [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker.git) to install Docker.
-* [run-protainer](ansible/roles/run-portainer): pulls and runs the Docker image `portainer/portainer:1.22.0` from [Docker Hub](https://hub.docker.com/).
+* [run-portainer](ansible/roles/run-portainer): pulls and runs the Docker image `portainer/portainer:1.22.0` from [Docker Hub](https://hub.docker.com/).
 
 ## Proxy Configuration
 
